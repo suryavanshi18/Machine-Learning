@@ -1,0 +1,24 @@
+Sentimental Analysis for Amazon reviews using Roberta and Vader Models
+
+
+1)Tokenize data and convert them into parts of speech 
+2) Use the SentimentIntensityAnalyzer module to calculate polarity score for a review
+3)Calculate the compound score for all the reviews in tha dataset and compare it with the Score column in the dataset to check model performance
+
+4) Download the roberta sentimental model and its corresponding tokenizer.
+5) Perform Step 2 and Step 3 for roberta model
+6)Plot a pairplot for Vader and roberta model for comparision of performance
+
+
+
+RoBERTa is a transformer-based language model that uses self-attention to process input sequences and generate contextualized representations of words in a sentence.
+
+1)Roberta is trained with dynamic masking : Dynamic masking introduces variability into the training process, where different subsets of words are masked in each epoch. This variability encourages the model to focus on the relationships between words, understand the context more deeply, and generalize better to unseen data
+
+
+2)Trained on full sentences without next sentence prediction loss: Each input is packed with full sentences sampled contigously from one or more documents at most 512 tokens. In the next sentence prediction, the model is trained to predict whether the observed document segments come from the same or distinct documents via an auxiliary Next Sentence Prediction (NSP) loss.
+ 
+
+3) Uses Byte Pair encoding which is a hybrid between character and world level representations.BPE relies on subwords units which are extracted by performing stats analysis of training corpus.
+
+4)Uses large mini batches which produces better results
