@@ -18,11 +18,24 @@ LoRA is a parameter-efficient fine-tuning method that adapts pre-trained models 
 - 🎯 **Focuses on attention matrices** (where models need most adaptation)
 
 ## 📚 Theoretical Background
-For original weight matrix \( W_0 \in \mathbb{R}^{d \times k} \), LoRA represents weight updates as:
-\[ \Delta W = W_0 + BA \]
-where:
-- \( B \in \mathbb{R}^{d \times r} \)
-- \( A \in \mathbb{R}^{r \times k} \)
-- \( r \ll \min(d,k) \) (low-rank dimension)
 
-![LoRA Architecture](https://miro.medium.com/v2/resize:fit:720/format:webp/1*4S2c6WZrie9E1AD7w2T2SA.png)
+![image](https://github.com/user-attachments/assets/6500a9e4-43f3-41eb-8c88-8a6b1da829cf)
+![image](https://github.com/user-attachments/assets/f9132295-e08d-4f37-b9d9-72834535c6c4)
+We freeze the original pre-trained weights (W₀ ∈ ℝ^{d×k}) and create an adaptive low-rank decomposition. 
+The weight update ΔW is factorized into two trainable matrices:
+- B ∈ ℝ^{d×r} (low-rank projection down)
+- A ∈ ℝ^{r×k} (low-rank projection up)
+
+Where the rank r satisfies r ≪ min(d,k). During forward propagation, 
+the modified weights become:
+
+W = W₀ + BA
+
+Backpropagation only updates matrices B and A while keeping W₀ frozen.
+
+
+## Reference
+https://www.youtube.com/watch?v=PXWYUTMt-AU&t=812s
+
+
+
