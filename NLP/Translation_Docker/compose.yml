@@ -1,0 +1,13 @@
+---
+services:
+  transformers-notebook:
+    build: ./
+    ports: 
+      - 8000:8888
+    environment:
+      - JUPYTER_TOKEN=docker
+      - HF_HOME=/home/jovyan/hf_cache
+      - TRANSFORMERS_CACHE=/home/jovyan/hf_cache
+    volumes:
+      - ./:/home/jovyan
+...
