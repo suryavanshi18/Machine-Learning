@@ -113,6 +113,4 @@ Build artifacts (like compiled binaries) are copied from the builder stage, leav
   * **Work Queue Pattern**: A system that uses a message queue to distribute tasks among multiple worker containers for asynchronous processing.
   * **Init Pattern**: An `init` container runs and completes a setup task (like database migration or configuration) before the main application container starts.
 
-<!-- end list -->
-
 ```
