@@ -1,5 +1,24 @@
 # FastMCP Server Setup for Claude Desktop
 
+MCP (Model context Protocol) is a standard way to provide AI systems access to data sources, apis ,filesystems
+with a single protocol
+Firstly we have the host system ie the AI (LLMs). Inside host we have a different MCP clients.
+The MCP clients are connected to MCP server via MCP protocol.
+MCP server are separate processes which provide clients Prompts Resources and Tools
+Prompts are instructions that can be injected into LLM context and tell how it should perform a task
+Resources are the data sources which can be infused in the LLM context window which allow model to reference external information.
+Tools are something that LLMs can call to perform actions outside context like query a database or open a file
+
+On the MCP client there are 2 primitives called Roots and Sampling
+Roots->Allows AI application to safely work with local file systems like opening,reading and analyzing without
+       giving unrestricted access to AI
+Sampling->This helps server to request the LLMs when needed. Like if you need to make a query for DB, then you can ask the LLMs do
+          so.
+
+Keeping above principles in mind
+We created a simple expense tracker using MCP protocol which uses Claude desktop as LLM host and my local .py files
+where I had defined 3 functions which added expenses , listed expensed and summarized my expense.
+I had used fastmcp package for implementing MCP and sqlite3 package for creating local db
 This guide will help you install, configure, and connect a FastMCP-enabled server to Claude Desktop using the `uv` package manager.
 
 ***
