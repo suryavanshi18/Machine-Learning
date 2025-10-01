@@ -1,0 +1,14 @@
+Sampling
+	Sampling allows a server to access a language model like Claude through a connected MCP client. Instead of the server directly calling Claude, it asks the client to make the call on its behalf. This shifts the responsibility and cost of text generation from the server to the client.
+	
+Logging and progress notifications
+	They help users understand what's happening during long-running operations.Users get real-time feedback showing exactly what's happening behind the scenes. They can see progress bars, status messages, and detailed logs as the operation runs.
+	
+Roots
+	Grants MCP servers access to specific files and folders on your local machine.Roots also provide security by limiting access.
+	
+Communications in MCP clients.
+	Problem with stdio transport->Can function only when client and server are on the same machine
+	Every MCP connection must start with a specific three-message handshake.
+	The streamable HTTP transport enables MCP clients to connect to remotely hosted servers over HTTP connections using Server side events.
+	
