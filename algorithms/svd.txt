@@ -1,0 +1,52 @@
+import numpy as np
+
+def svd_2x2_singular_values(A: np.ndarray) -> tuple:
+    # Use float64 for precision to pass reconstruction tests
+    A = A.astype(np.float64)
+    
+    # 1. Compute A^T A (Symmetric matrix)
+    ATA = A.T @ A
+    
+    # 2. Characteristic equation for eigenvalues: λ² - trace·λ + det = 0
+    trace = np.trace(ATA)
+    det = np.linalg.det(ATA)
+    
+    # Quadratic formula for eigenvalues
+    discriminant = np.sqrt(max(0, trace**2 - 4*det))
+    l1 = (trace + discriminant) / 2
+    l2 = (trace - discriminant) / 2
+    
+    # Singular values are sqrt of eigenvalues
+    s1 = np.sqrt(max(0, l1))
+    s2 = np.sqrt(max(0, l2))
+    S = np.array([s1, s2])
+    
+    # 3. Calculate V (Eigenvectors of A^T A)
+    # Using a robust method for 2x2 symmetric eigenvectors
+    def get_eigenvector(mat, lam):
+        # Solve (mat - lam*I)v = 0
+        a, b = mat[0, 0] - lam, mat[0, 1]
+        c, d = mat[1, 0], mat[1, 1] - lam
+        
+        # Pick the row with the largest values for stability
+        if abs(c) + abs(d) > abs(a) + abs(b):
+            v = np.array([-d, c])
+        else:
+            v = np.array([-b, a])
+            
+        norm = np.linalg.norm(v)
+        return v / norm if norm > 1e-15 else np.array([1, 0])
+
+    v1 = get_eigenvector(ATA, l1)
+    v2 = get_eigenvector(ATA, l2)
+    V = np.column_stack([v1, v2])
+    
+    # 4. Calculate U using the SVD relation: u_i = A v_i / sigma_i
+    u1 = (A @ v1) / s1 if s1 > 1e-15 else np.array([1, 0])
+    u2 = (A @ v2) / s2 if s2 > 1e-15 else np.array([0, 1])
+    
+    # Handle the case where u1 and u2 might not be perfectly orthogonal due to precision
+    # (Gram-Schmidt for U if necessary, but u_i = Av_i/s usually suffices)
+    U = np.column_stack([u1, u2])
+    
+    return U, S, V.T
